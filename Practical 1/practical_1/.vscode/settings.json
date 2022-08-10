@@ -1,0 +1,14 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/home/momo/Documents/Semester 2/COS326/objectdb-2.8.7/bin/objectdb.jar",
+        "/lib/jvm/java-11-openjfx/lib/javafx.swing.jar",
+        "/lib/jvm/java-11-openjfx/lib/javafx.web.jar",
+        "/lib/jvm/java-11-openjfx/lib/javafx.media.jar",
+        "/lib/jvm/java-11-openjfx/lib/javafx.graphics.jar",
+        "/lib/jvm/java-11-openjfx/lib/javafx.fxml.jar",
+        "/lib/jvm/java-11-openjfx/lib/javafx.controls.jar",
+        "/lib/jvm/java-11-openjfx/lib/javafx.base.jar",
+        "/lib/jvm/java-11-openjfx/lib/javafx-swt.jar"
+    ]
+}
