@@ -56,6 +56,10 @@ public class App extends Application {
       searchButton.setOnAction(e -> {
          setScene(searchStudent(), 370, 330, "Find A Student");
       });
+
+      allButton.setOnAction(e -> {
+         setScene(showStudents(), 370, 330, "All Students");
+      });
       Group root = new Group(box);
       return root;
    }
@@ -65,9 +69,28 @@ public class App extends Application {
       Button searchButton = new Button("Search");
       Button backButton = new Button("Back");
 
+      backButton.setOnAction(e -> {
+         returnToHome();
+      });
+
       HBox search = new HBox(5);
       search.setPadding(new Insets(25, 10, 10, 50));
       search.getChildren().addAll(searchbar, searchButton, backButton);
+
+      Group root = new Group(search);
+      return root;
+   }
+
+   public Group showStudents(){;
+      Button backButton = new Button("Back");
+
+      backButton.setOnAction(e -> {
+         returnToHome();
+      });
+
+      HBox search = new HBox(5);
+      search.setPadding(new Insets(25, 10, 10, 50));
+      search.getChildren().addAll(backButton);
 
       Group root = new Group(search);
       return root;
