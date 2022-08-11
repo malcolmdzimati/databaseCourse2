@@ -28,12 +28,16 @@ public class App extends Application {
    }
 
    public Group homePage(){
-      Button addButton = new Button("Add Student");
-      Button deleteButton = new Button("Delete Student");
-      Button searchButton = new Button("Search");
-      Button allButton = new Button("Display All");
+      Button addButton = new Button("Add A Student");
+      Button deleteButton = new Button("Delete A Student");
+      Button searchButton = new Button("Search For A Student");
+      Button allButton = new Button("Display All Students");
 
-      Group root = new Group(addButton, deleteButton, searchButton, allButton);
+      VBox box = new VBox(5);
+      box.setPadding(new Insets(25, 5 , 5, 50));
+      box.getChildren().addAll(addButton, deleteButton, searchButton, allButton);
+
+      Group root = new Group(box);
       return root;
    }
 
