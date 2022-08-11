@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -18,15 +19,25 @@ import javafx.stage.Stage;
 public class App extends Application {
 
    public void start(Stage stage) {
+      
+      //Setting the stage
+      Scene scene = new Scene(addStudent(), 260, 330, Color.BEIGE);
+      stage.setTitle("Database Student");
+      stage.setScene(scene);
+      stage.show();
+   }
+
+   public Group addStudent(){
       //Creating nodes
       TextField textFieldName = new TextField();
       TextField textFieldSurname = new TextField();
       TextField textFieldDegree = new TextField();
       TextField textFieldSNumber = new TextField();
-      Button button = new Button("Submit");
+      Button button = new Button("Add");
+      Button bbutton = new Button("Back");
 
-      button.setTranslateX(100);
-      button.setTranslateY(270);
+      //button.setTranslateX(100);
+      //button.setTranslateY(270);
 
       //Creating labels
       Label labelName = new Label("Name: ");
@@ -58,13 +69,17 @@ public class App extends Application {
       VBox box = new VBox(5);
       box.setPadding(new Insets(25, 5 , 5, 50));
       box.getChildren().addAll(labelName, textFieldName, labelSurname, textFieldSurname, labelDegree, textFieldDegree, labelSNumber, textFieldSNumber);
-      Group root = new Group(box, button);
 
-      //Setting the stage
-      Scene scene = new Scene(root, 260, 330, Color.BEIGE);
-      stage.setTitle("Text Field Example");
-      stage.setScene(scene);
-      stage.show();
+      //Adding buttons
+      HBox buttons = new HBox(5);
+      buttons.setPadding(new Insets(0, 10, 10, 50));
+      buttons.getChildren().addAll(button, bbutton);
+      buttons.setTranslateY(270);
+
+      //Adding to soon
+      Group root = new Group(box, buttons);
+
+      return root;
    }
 
    public static void main(String args[]){
