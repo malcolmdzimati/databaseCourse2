@@ -28,7 +28,7 @@ public class App extends Application {
    }
 
    public void returnToHome(){
-      setScene(homePage(), 250, 200, "Student Database Home");
+      setScene(homePage(), 250, 150, "Student Database Home");
    }
 
    public void start(Stage stag) {
@@ -40,14 +40,13 @@ public class App extends Application {
    public Group homePage() {
       // Create buttons
       Button addButton = new Button("Add A Student");
-      Button deleteButton = new Button("Delete A Student");
-      Button searchButton = new Button("Search For A Student");
+      Button searchButton = new Button("Find A Student");
       Button allButton = new Button("Display All Students");
 
       // Align buttons
       VBox box = new VBox(5);
       box.setPadding(new Insets(25, 5, 5, 50));
-      box.getChildren().addAll(addButton, deleteButton, searchButton, allButton);
+      box.getChildren().addAll(addButton, searchButton, allButton);
 
       // Buttons action
       addButton.setOnAction(e -> {
