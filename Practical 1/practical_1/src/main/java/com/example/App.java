@@ -21,10 +21,20 @@ public class App extends Application {
    public void start(Stage stage) {
       
       //Setting the stage
-      Scene scene = new Scene(addStudent(), 260, 330, Color.BEIGE);
+      Scene scene = new Scene(homePage(), 260, 330, Color.BEIGE);
       stage.setTitle("Database Student");
       stage.setScene(scene);
       stage.show();
+   }
+
+   public Group homePage(){
+      Button addButton = new Button("Add Student");
+      Button deleteButton = new Button("Delete Student");
+      Button searchButton = new Button("Search");
+      Button allButton = new Button("Display All");
+
+      Group root = new Group(addButton, deleteButton, searchButton, allButton);
+      return root;
    }
 
    public Group addStudent(){
