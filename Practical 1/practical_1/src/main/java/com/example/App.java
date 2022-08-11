@@ -53,10 +53,23 @@ public class App extends Application {
          setScene(addStudent(), 260, 330, "Add A Student");
       });
 
-      addButton.setOnAction(e -> {
-         setScene(addStudent(), 260, 330, "Add A Student");
+      searchButton.setOnAction(e -> {
+         setScene(searchStudent(), 370, 330, "Find A Student");
       });
       Group root = new Group(box);
+      return root;
+   }
+
+   public Group searchStudent(){
+      TextField searchbar = new TextField();
+      Button searchButton = new Button("Search");
+      Button backButton = new Button("Back");
+
+      HBox search = new HBox(5);
+      search.setPadding(new Insets(25, 10, 10, 50));
+      search.getChildren().addAll(searchbar, searchButton, backButton);
+
+      Group root = new Group(search);
       return root;
    }
 
@@ -66,7 +79,7 @@ public class App extends Application {
       TextField textFieldSurname = new TextField();
       TextField textFieldDegree = new TextField();
       TextField textFieldSNumber = new TextField();
-      Button button = new Button("Add");
+      Button button = new Button("Add Student");
       Button bbutton = new Button("Back");
 
       // button.setTranslateX(100);
