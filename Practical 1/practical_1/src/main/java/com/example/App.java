@@ -27,10 +27,14 @@ public class App extends Application {
       stage.show();
    }
 
+   public void returnToHome(){
+      setScene(homePage(), 250, 200, "Student Database Home");
+   }
+
    public void start(Stage stag) {
       stage = stag;
       // Setting the stage
-      setScene(homePage(), 300, 300, "Student Database Home");
+      returnToHome();
    }
 
    public Group homePage() {
@@ -46,6 +50,10 @@ public class App extends Application {
       box.getChildren().addAll(addButton, deleteButton, searchButton, allButton);
 
       // Buttons action
+      addButton.setOnAction(e -> {
+         setScene(addStudent(), 260, 330, "Add A Student");
+      });
+
       addButton.setOnAction(e -> {
          setScene(addStudent(), 260, 330, "Add A Student");
       });
@@ -84,12 +92,8 @@ public class App extends Application {
       text.setWrappingWidth(580);
 
       // Displaying the message
-      button.setOnAction(e -> {
-         // Retrieving data
-         String name = textFieldName.getText();
-         String email = textFieldSurname.getText();
-         text.setText(
-               "Hello " + name + " Welcome to Tutorialspoint. From now, we will communicate with you at " + email);
+      bbutton.setOnAction(e -> {
+         returnToHome();
       });
 
       // Adding labels for nodes
