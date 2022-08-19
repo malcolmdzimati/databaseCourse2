@@ -44,12 +44,12 @@ public class App extends Application {
       // Create buttons
       Button addButton = new Button("Add A Student");
       Button searchButton = new Button("Find A Student");
-      Button allButton = new Button("Display All Students");
+      Button pracButton = new Button("Display All Students");
 
       // Align buttons
       VBox box = new VBox(5);
       box.setPadding(new Insets(25, 5, 5, 50));
-      box.getChildren().addAll(addButton, searchButton, allButton);
+      box.getChildren().addAll(addButton, searchButton, pracButton);
 
       // Buttons action
       addButton.setOnAction(e -> {
@@ -60,20 +60,21 @@ public class App extends Application {
          setScene(searchStudent(), 370, 330, "Find A Student");
       });
 
-      allButton.setOnAction(e -> {
-         setScene(showStudents(), 370, 330, "All Students");
+      pracButton.setOnAction(e -> {
+         setScene(showStudents(), 370, 330, "Show all Students");
       });
+      
       Group root = new Group(box);
       return root;
    }
 
    public Group searchStudent(){
       TextField searchbar = new TextField();
-      Label results = new Label();
       Button searchButton = new Button("Search");
       Button backButton = new Button("Back");
       Button delete = new Button("Delete Student");
       Button edit = new Button("Edit Student");
+      Button addPrac = new Button("Add Prac");
 
       Text text = new Text("");
       
@@ -81,7 +82,7 @@ public class App extends Application {
       
       HBox editS = new HBox(5);
       editS.setPadding(new Insets(0, 10, 10, 30));
-      editS.getChildren().addAll(edit, delete);
+      editS.getChildren().addAll(addPrac, delete);
       editS.setVisible(false);
 
       // Setting font to the label
@@ -96,20 +97,18 @@ public class App extends Application {
       });
       
       searchButton.setOnAction(e -> {
-    	  if(searchbar.getText().matches("\\d*") && searchbar.getText().length()==8) {
-    		  text.setText(db.findStudent(Long.parseLong(searchbar.getText())));
+    		  text.setText(db.findStudent(searchbar.getText()));
         	  if(text.getText()!="null") {
         		  editS.setVisible(true);
-        	  }
-    	  }else {
+        	  }else {
     		  a.setAlertType(AlertType.ERROR);
-    		  a.setContentText("Search using Student number which is an 8 digit number.");
+    		  a.setContentText("Student not Found");
     		  a.show();
     	  }
       });
       
       delete.setOnAction(e -> {
-    	  db.deleteStudent(Long.parseLong(searchbar.getText()));
+    	  db.deleteStudent(searchbar.getText());
     	  returnToHome();
     	  a.setAlertType(AlertType.INFORMATION);
     	  a.setContentText("Student "+searchbar.getText()+" Succesfully deleted.");
@@ -117,8 +116,13 @@ public class App extends Application {
       });
       
       edit.setOnAction(e -> {
-    	  Student st = db.findStudentO(Long.parseLong(searchbar.getText()));
-    	  setScene(editStudent(st.getName(), st.getSurname(), st.getDegree(), Long.toString(st.getStudentNumber())), 260, 330, "Edit A Student");
+    	  Student st = db.findStudentO(searchbar.getText());
+    	  setScene(editStudent(st.getName(), st.getSurname(), Long.toString(st.getStudentNumber())), 260, 330, "Edit A Student");
+      });
+      
+      addPrac.setOnAction(e -> {
+    	  Student st = db.findStudentO(searchbar.getText());
+    	  setScene(addPractical(st), 260, 330, "Assign Prac");
       });
 
       HBox search = new HBox(5);
@@ -176,7 +180,6 @@ public class App extends Application {
       // Creating nodes
       TextField textFieldName = new TextField();
       TextField textFieldSurname = new TextField();
-      TextField textFieldDegree = new TextField();
       TextField textFieldSNumber = new TextField();
       Button button = new Button("Add Student");
       Button bbutton = new Button("Back");
@@ -188,7 +191,6 @@ public class App extends Application {
       // Creating labels
       Label labelName = new Label("Name: ");
       Label labelSurname = new Label("Surname: ");
-      Label labelDegree = new Label("Degree: ");
       Label labelSNumber = new Label("Student Number: ");
       
       // Displaying the message
@@ -198,13 +200,13 @@ public class App extends Application {
       
       button.setOnAction(e ->{
     	  if(textFieldSNumber.getText().matches("\\d*") && textFieldSNumber.getText().length()==8) {
-    		  String sn = db.findStudent(Long.parseLong(textFieldSNumber.getText()));
+    		  String sn = db.findStudent(textFieldName.getText());
     		  if(sn!="null") {
     			  a.setAlertType(AlertType.ERROR);
-        		  a.setContentText("Student Number already in use");
+        		  a.setContentText("Student Name already in use");
         		  a.show();
     		  }else {
-    			  db.addStudent(textFieldName.getText(), textFieldSurname.getText(), textFieldDegree.getText(), Long.parseLong(textFieldSNumber.getText()));
+    			  db.addStudent(textFieldName.getText(), textFieldSurname.getText(), Long.parseLong(textFieldSNumber.getText()));
     	    	  returnToHome();
     	    	  a.setAlertType(AlertType.INFORMATION);
     	    	  a.setContentText("Student "+textFieldName.getText()+" Succesfully added.");
@@ -220,7 +222,7 @@ public class App extends Application {
       // Adding labels for nodes
       VBox box = new VBox(5);
       box.setPadding(new Insets(25, 5, 5, 50));
-      box.getChildren().addAll(labelName, textFieldName, labelSurname, textFieldSurname, labelDegree, textFieldDegree,
+      box.getChildren().addAll(labelName, textFieldName, labelSurname, textFieldSurname,
             labelSNumber, textFieldSNumber);
 
       // Adding buttons
@@ -235,11 +237,59 @@ public class App extends Application {
       return root;
    }
    
-   public Group editStudent(String n, String sn, String d, String snu) {
+   public Group addPractical(Student st) {
+	     TextField textFieldName = new TextField();
+	     TextField textFieldMarks = new TextField();
+	      Button button = new Button("Add Pracitcal");
+	      Button bbutton = new Button("Back");
+	     
+	     Alert a = new Alert(AlertType.NONE);
+
+	     Label labelName = new Label("Practical Name: ");
+	     Label labelMarks = new Label("Total Marks: ");
+	     Label labelSt = new Label("For Student: ");
+	     Label labelStd = new Label("Name: "+st.getName()+"\nSurname: "+st.getSurname()+"\nStudentNumber: "+st.getStudentNumber());
+	     
+	     button.setOnAction(e ->{
+	    	  if(textFieldMarks.getText().matches("\\d*")) {
+	    		  db.addPractical(st.getName(), textFieldName.getText(), textFieldMarks.getText());
+	    		  returnToHome();
+	    		  a.setAlertType(AlertType.CONFIRMATION);
+	    		  a.setContentText("Practical Added.");
+	    		  a.show();
+	    	  } else {
+	    		  a.setAlertType(AlertType.ERROR);
+	    		  a.setContentText("Marks should be a numerical value.");
+	    		  a.show();
+	    	  }
+	      });
+	     
+	     bbutton.setOnAction(e -> {
+	         returnToHome();
+	      });
+	     
+	  // Adding labels for nodes
+	      VBox box = new VBox(5);
+	      box.setPadding(new Insets(25, 5, 5, 50));
+	      box.getChildren().addAll(labelName, textFieldName, labelMarks, textFieldMarks,
+	            labelSt, labelStd);
+
+	      // Adding buttons
+	      HBox buttons = new HBox(5);
+	      buttons.setPadding(new Insets(0, 10, 10, 50));
+	      buttons.getChildren().addAll(button, bbutton);
+	      buttons.setTranslateY(270);
+
+	      // Adding to soon
+	      Group root = new Group(box, buttons);
+
+	      return root;
+   }
+   
+   public Group editStudent(String n, String sn, String snu) {
 	      // Creating nodes
 	      TextField textFieldName = new TextField(n);
 	      TextField textFieldSurname = new TextField(sn);
-	      TextField textFieldDegree = new TextField(d);
 	      Label textFieldSNumber = new Label(snu);
 	      Button button = new Button("Save Changes");
 	      Button bbutton = new Button("Cancel");
@@ -252,7 +302,6 @@ public class App extends Application {
 	      // Creating labels
 	      Label labelName = new Label("Name: ");
 	      Label labelSurname = new Label("Surname: ");
-	      Label labelDegree = new Label("Degree: ");
 	      Label labelSNumber = new Label("Student Number: ");
 
 	      // Displaying the message
@@ -261,7 +310,7 @@ public class App extends Application {
 	      });
 	      
 	      button.setOnAction(e ->{
-	    	  db.update( Long.parseLong(snu), textFieldName.getText(), textFieldSurname.getText(), textFieldDegree.getText());
+	    	  db.update( Long.parseLong(snu), textFieldName.getText(), textFieldSurname.getText());
 	    	  returnToHome();
 	    	  a.setAlertType(AlertType.INFORMATION);
 	    	  a.setContentText("Student "+textFieldName.getText()+" Succesfully updated.");
@@ -271,7 +320,7 @@ public class App extends Application {
 	      // Adding labels for nodes
 	      VBox box = new VBox(5);
 	      box.setPadding(new Insets(25, 5, 5, 50));
-	      box.getChildren().addAll(labelName, textFieldName, labelSurname, textFieldSurname, labelDegree, textFieldDegree,
+	      box.getChildren().addAll(labelName, textFieldName, labelSurname, textFieldSurname,
 	            labelSNumber, textFieldSNumber);
 
 	      // Adding buttons

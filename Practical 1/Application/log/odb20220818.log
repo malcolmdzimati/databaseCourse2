@@ -1,0 +1,23 @@
+------------------------------------------------------------------------------------------------------------------------
+
+[2022-08-18 17:19:18 #1 tools.enhancer] 
+com.objectdb.o.UserException: Package working is not found by the enhancer
+	at com.objectdb.o.MSG.a(MSG.java:64)
+	at com.objectdb.o.JEL.m(JEL.java:417)
+	at com.objectdb.o.JEN.g(JEN.java:101)
+	at com.objectdb.Enhancer.enhance(Enhancer.java:69)
+	at com.objectdb.Enhancer.enhance(Enhancer.java:90)
+	at working.App.main(App.java:290)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader.main(JarRsrcLoader.java:61)
+
+[2022-08-18 17:19:19 #2 store] 
+Database '/home/momo/Documents/Semester 2/COS326/databaseCourse2/Practical 1/Application/db/studentDatabase.odb' has been recovered (tr. 1-8)
+
+[2022-08-18 17:19:19 #3 store] 
+Database '/home/momo/Documents/Semester 2/COS326/databaseCourse2/Practical 1/Application/db/studentDatabase.odb' is opened by 2340@VivoBookMomo
+
+[2022-08-18 17:19:19 #4 store] 
+Configuration path: ?
+

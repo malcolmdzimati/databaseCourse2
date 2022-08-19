@@ -1,9 +1,16 @@
 package working;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
 @Entity
 public class Student implements Serializable {
@@ -12,18 +19,17 @@ public class Student implements Serializable {
     //This annotation specifies the primary key of the entity
 
     @Id
-    private long studentNumber;
     private String name;
+    private long studentNumber;
     private String surname;
-    private String degree;
+    Set<Practical> practicals = new HashSet<>();
 
     public Student() {
 
     }
-    public Student(String n, String sn, String d, long snm) {
-        this.surname = sn;
+    public Student(String n, String sn, long snm) {
+        surname = sn;
         this.name = n;
-        this.degree = d;
         this.studentNumber = snm;
     }
 
@@ -50,18 +56,30 @@ public class Student implements Serializable {
     public void setSurname(String a) {
         this.surname = a;
     }
-
-    public String getDegree() {
-        return degree;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@JoinColumn(name="childFK")
+    public Set<Practical> getPracticals() {
+    	return practicals;
     }
-
-    public void setDegree(String n) {
-        this.degree = n;
+    
+    public void setPracticals(Set<Practical> pracs) {
+        this.practicals = pracs;
     }
 
     @Override
     public String toString() {
-        return String.format("(%s, %s, %s, %s)",
-            this.name, this.surname, this.degree, Long.toString(this.studentNumber));
+    	String prac = "\t";
+    	if(practicals==null) {
+    		prac= "Student has no pracs";
+    	}else {
+	    	Iterator<Practical> itr = practicals.iterator();
+	    	while(itr.hasNext()) {
+	    		prac+=itr.next()+"\n\t";
+	    	}
+    	}
+    	
+        return String.format("Name: %s, \nSurname: %s, \nStudentNumber: %s \n Pracs:\n %s",
+            this.name, this.surname, Long.toString(this.studentNumber), prac);
     }
 }

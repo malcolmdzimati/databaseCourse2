@@ -1,4 +1,4 @@
-module prac1 {
+module prac2 {
 	requires objectdb;
 	requires javafx.graphics;
 	requires javafx.controls;
