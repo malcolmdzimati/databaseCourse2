@@ -1,0 +1,78 @@
+Question 1
+for $b in doc("Musicians.xml")/musicians/musician
+  return<musician>
+  {$b/name}
+  </musician>
+  
+Question 2 
+for $b in doc("Musicians.xml")/musicians/musician
+  return<album>
+  {$b/name}
+  {$b/albums/album}
+  </album>
+  
+Question 3
+for $b in doc("Musicians.xml")/musicians/musician
+  where $b/albums/album = "Lateralus"
+  return<musician>
+  {$b/name}
+  </musician>
+  
+Question 4
+for $b in doc("Musicians.xml")/musicians/musician
+  where $b/genre contains text "Pop"
+  return<musicians>
+  {$b}
+  </musicians>
+  
+Question 5 
+for $b in doc("Musicians.xml")/musicians/musician
+  where $b[@type="solo"]
+  return<musician>
+  {$b}
+  </musician>
+  
+Question 6
+for $b in doc("Musicians.xml")/musicians
+  return<musician>
+  {$b/musician[@type="solo"][2]/name}
+  {$b/musician[@type="solo"][2]/genre}
+  </musician>
+  
+Question 7
+for $b in doc("Musicians.xml")/musicians/musician
+  where $b/name = "Ben Folds"
+  return<musician>
+  {$b/albums/album[4]}
+  </musician>
+  
+Question 8
+for $b in doc("Musicians.xml")/musicians/musician
+  return<albums>
+  {$b/albums/album[@year>2007]}
+  </albums>
+  
+Question 9
+for $b in doc("Musicians.xml")/musicians/musician
+  let $years := max($b/albums/album/@year) - min($b/albums/album/@year)+1
+  let $count := count($b/albums/album)
+  let $result := $years div $count
+  order by $result
+  return<musician>
+    {$b/name}
+    <rate>
+      {$result}
+    </rate>
+  </musician>
+  
+Question 10
+for $b in doc("Musicians.xml")/musicians/musician
+  let $latest := max($b/albums/album/@year)
+  order by -$latest
+  return<musician>
+    {$b/name}
+    {$b/albums/album[@year=$latest]}
+    <year>
+      {$latest}
+    </year>
+  </musician>
